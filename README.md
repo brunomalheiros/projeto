@@ -1,2 +1,2 @@
-Projeto desenvolvido por Buno Malheiros
-Emaial: brunopma10@gmail.com
+Projeto desenvolvido por Bruno Malheiros
+E-mail: brunopma10@gmail.com
