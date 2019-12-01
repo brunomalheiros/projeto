@@ -50,13 +50,21 @@
 			</div>
 		</div>
 			<br>
+			<form action="/login" method="POST">  
 			<div class="login">
-					<input type="text" placeholder="Email" name="nome"><br>
-					<input type="password" placeholder="Senha" name="senha" id="senha"><br>
-					<input type="button" value="Entrar" onclick="entrar()">
-					<p style="color:white;">Deseja se cadastrar? Clique <a href="../_cadastro/cadastro.html">aqui</a></p>
+						{{form.csrf_token}}
+
+                        {{form.email.label}}
+                        {{form.email(class_="input")}}
+
+                        {{form.senha.label}}
+                        {{form.senha(class_="input")}} 
+                
+						{{form.entrar(class_="btnform")}}
+						
+					
 			</div>
-			
+			</form>
 	</body>
 	{% endblock conteudo %}
 </html>
