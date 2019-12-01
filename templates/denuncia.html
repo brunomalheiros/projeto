@@ -3,8 +3,23 @@
 {% block conteudo %}   
 <body>
 
-    <h1>My First Heading</h1>
-    <p>My first paragraph.</p>
+    <form action="/pagina-processa-dados-do-form" method="post">
+        <div>
+            <label for="name">Nome:</label>
+            <input type="text" id="name" />
+        </div>
+        <div>
+            <label for="mail">E-mail:</label>
+            <input type="email" id="mail" />
+        </div>
+        <div>
+            <label for="msg">Mensagem:</label>
+            <textarea id="msg"></textarea>
+        </div>
+        <div class="button">
+            <button type="submit">Enviar sua mensagem</button>
+        </div>
+    </form>
 
 </body>
 {% endblock conteudo %}
