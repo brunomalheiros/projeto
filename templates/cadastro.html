@@ -12,35 +12,33 @@
 	{% block conteudo %}
 	<body>
 		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-		
-		  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
-			<span class="navbar-toggler-icon"></span>
-		  </button>
-		  <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-			<a class="navbar-brand" href="../index.html">DenunCity</a>
-			<ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+	
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+			  <span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+			  <a class="navbar-brand" href="{{url_for('home')}}">DenunCity</a>
+			  <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
 			  <li class="nav-item dropdown">
-				<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Menu</a>
-				<div class="dropdown-menu">
-				  <a class="dropdown-item" href="#">Efetuar denuncia</a>
-				  <a class="dropdown-item" href="../_login/login.html">Login</a>
-				  <a class="dropdown-item" href="#">Cadastro</a>
-				  <a class="dropdown-item" href="#">Quem somos</a>
-				</div>
-			 </li>
-			  <li class="nav-item">
-				<a class="nav-link" href="../_login/login.html">Login</a>
-			  </li>
-			  <li class="nav-item">
-				<a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Efetuar denuncia</a>
-			  </li>
-			</ul>
-			<form class="form-inline my-2 my-lg-0">
-			  <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-			  <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-			</form>
-		  </div>
-		</nav>
+				  
+			   </li>
+				<li class="nav-item">
+				  <a class="nav-link" href="{{url_for('login')}}">Login</a>
+				</li>
+				<li class="nav-item">
+				  <a class="nav-link" href="{{url_for('cadastro')}}">Cadastro</a>
+				</li>
+				<li class="nav-item">
+				  {% if current_user.is_authenticated %}
+							<a class="nav-link" href="{{url_for('denuncia')}}">Efetuar denuncia</a>
+						{% else %} 
+							<a class="nav-link" href="{{url_for('login')}}">Efetuar denuncia</a>
+						{% endif %}
+				</li>
+			  </ul>
+	  
+			</div>
+		  </nav>
 	
 		<div class="body"></div>
 		<div class="header">
@@ -53,14 +51,14 @@
 					{{ form.hidden_tag() }}
 
 					{{form.username.label}}
-					{{form.username(class_="input")}}
+					{{form.username}}
 
 					{{form.email.label}}
-				    {{form.email(class_="input")}}
+				    {{form.email}}
 				
 
 					{{form.senha.label}}
-					{{form.senha(class_="input")}}
+					{{form.senha}}
 					
 					<button class-type="submit" class=""> Cadastrar</button>
 			
