@@ -76,7 +76,7 @@ def cadastro():
         new_user = Usuario(email=email, username=username, senha=senha)
         db.session.add(new_user)
         db.session.commit()
-        return redirect (url_for('login'))
+        return redirect (url_for('home'))
 
 
     return render_template('cadastro.html', form=form)
