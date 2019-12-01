@@ -48,19 +48,24 @@
 		</div>
 		
 		<div class="cadastro">
-			<form>
-				<input type="text" placeholder="Nome" id="nome" /></br>
-				<input type="text" placeholder="Sobrenome" id="snome" /><br>
-				<input type="text" placeholder="E-mail" id="email"/><br>
-				<input type="password" placeholder="Criar Senha" id="senha"/><br>
-			 	<input type="password" placeholder="Confirmar Senha" id="senha2"/>
-				<input type="number" placeholder="CPF" ID="cpf"/><br>
-				<input type="number" placeholder="Idade" id="idade"/><br>
-			 	<p style="font-size:20px; color:white">Tipo de usuário:</p>
+			<form action="" method="POST">
+					{{form.csrf_token}}
+					{{ form.hidden_tag() }}
+
+					{{form.username.label}}
+					{{form.username(class_="input")}}
+
+					{{form.email.label}}
+				    {{form.email(class_="input")}}
+				
+
+					{{form.senha.label}}
+					{{form.senha(class_="input")}}
+					
+					<button class-type="submit" class=""> Cadastrar</button>
+			
 			</form>
-			<p style="color:white"> <input type="radio" name="tipou" />Comun</p>
-			<p style="color:white"><input type="radio" name="tipou" />Instituição</p>
-			<input type="button" value="Cadastrar" onclick="cadastro()"/><br>
+			
 			<p style="color:white">Já possui uma conta? Clique <a href="../_login/login.html">aqui</a> para fazer o login</p>
 		</div>
 		
