@@ -1,7 +1,8 @@
-from flask import Flask, render_template, redirect, url_for,flash
+from flask import Flask, render_template, redirect, url_for,session
 from flask_sqlalchemy import SQLAlchemy
 from cadastroo import CadastroForm
 from login import LoginForm
+from denuncia import DenunciaForm
 from flask_login import LoginManager, login_user, logout_user
 
 
@@ -19,8 +20,8 @@ class Usuario(db.Model):
     username = db.Column(db.String(80), unique=True, nullable = False)
     email = db.Column(db.String(120), unique=True, nullable = False)
     senha = db.Column(db.String(80), nullable = False)
+    denuncia = db.relationship('Denuncia', backref='usuario', lazy=True)
 
-        
 
     def __init__(self, username, email, senha):
         self.username = username
@@ -42,6 +43,17 @@ class Usuario(db.Model):
     def load_user(user_id):
         return Usuario.query.filter_by(id=user_id).first()
 
+class Denuncia(db.Model):
+    
+    id = db.Column(db.Integer, primary_key=True)
+    titulo = db.Column(db.String(100), nullable=False)
+    conteudo = db.Column(db.Text, nullable=False)
+    usuario_id = db.Column(
+        db.Integer, 
+        db.ForeignKey('usuario.id'), 
+        nullable=False
+    )  
+
 db.create_all()
 
 @app.route('/')
@@ -49,9 +61,20 @@ def home():
     return render_template('index.html')
 
 
-@app.route('/denuncia')
+@app.route('/denuncia',methods=['GET', 'POST'])
 def denuncia():
-    return render_template('denuncia.html')
+
+    form = DenunciaForm()
+    if form.validate_on_submit():
+        denun = Denuncia()
+        denun.usuario_id = 1
+        denun.titulo = form.titulo.data
+        denun.conteudo = form.conteudo.data
+        db.session.add(denun)
+        db.session.commit()
+        return redirect(url_for('home'))
+
+    return render_template('denuncia.html', form=form)
 
 @app.route('/login',methods=['GET', 'POST'])
 def login():
@@ -60,7 +83,6 @@ def login():
         user = Usuario.query.filter_by(email=form.email.data).first()
         if user and user.senha == form.senha.data:
             login_user(user)
-            flash('Logged in')
             return redirect(url_for('home'))
 
     return render_template('login.html', form=form)
@@ -69,17 +91,19 @@ def login():
 def cadastro():
     form = CadastroForm()
     if form.validate_on_submit():
-        email = form.email.data
-        username = form.username.data
-        senha=form.senha.data
-        
-        new_user = Usuario(email=email, username=username, senha=senha)
-        db.session.add(new_user)
+        user = Usuario(form.username.data, form.email.data, form.senha.data)
+        db.session.add(user)
         db.session.commit()
         return redirect (url_for('home'))
 
 
     return render_template('cadastro.html', form=form)
+
+@app.route('/logout')
+def logout():
+    session.clear()
+    logout_user()   
+    return redirect(url_for('home'))
 
 if(__name__ == '__main__'):
     app.run(debug=True)
